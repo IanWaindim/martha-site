@@ -22,14 +22,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
  
 if (!empty($errors)) {
-    // In a real site you'd send these back nicely — for now just show them
+    // In a real site we would send these back nicely — for now just show them
     foreach ($errors as $error) {
         echo htmlspecialchars($error) . "<br>";
     }
     exit;
 }
  
-// Email settings — change this to Martha's real email
+// Email settings — change this to Martha's real email (not yet set up)
 $to      = 'martha@waindim.com';
 $subject = "New message from $name via your website";
 $body    = "Name: $name\nEmail: $email\n\nMessage:\n$message";
