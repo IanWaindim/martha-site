@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waindim Martha Afuma</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F7F3ED;
+      --warm-brown: #8B6F47;
+      --deep: #1C1410;
+      --accent: #C4956A;
+      --muted: #A89880;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--deep);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--deep);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-brown);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--deep); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 4rem 6rem 5rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-name {
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--deep);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.5s;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--warm-brown);
+    }
+
+    .hero-tagline {
+      margin-top: 2rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 28rem;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.7s;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.9s;
+    }
+
+    .btn-primary {
+      background: var(--deep);
+      color: var(--cream);
+      padding: 0.85rem 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--warm-brown);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--warm-brown);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .btn-secondary:hover { gap: 0.9rem; }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image-wrap {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #D4B896 0%, #8B6F47 50%, #3D2B1F 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image-placeholder {
+      width: 60%;
+      aspect-ratio: 3/4;
+      border: 1px solid rgba(247,243,237,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(247,243,237,0.6);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      gap: 1rem;
+      animation: fadeIn 1.5s ease forwards 0.2s;
+      opacity: 0;
+    }
+
+    .hero-image-placeholder svg {
+      width: 3rem;
+      height: 3rem;
+      opacity: 0.5;
+    }
+
+    .hero-scroll-line {
+      position: absolute;
+      bottom: 3rem;
+      left: 5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.1s;
+    }
+
+    .scroll-line {
+      width: 3rem;
+      height: 1px;
+      background: var(--muted);
+      animation: expandLine 1.5s ease forwards 1.3s;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 8rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+      border-top: 1px solid rgba(139,111,71,0.15);
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 0.5rem;
+    }
+
+    .about-content h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    .about-content h2 em {
+      font-style: italic;
+      color: var(--warm-brown);
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: #5C4A38;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(139,111,71,0.15);
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--warm-brown);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    /* QUALITIES */
+    .qualities {
+      background: var(--deep);
+      padding: 7rem 5rem;
+      color: var(--cream);
+    }
+
+    .qualities-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5rem;
+    }
+
+    .qualities-header h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      max-width: 20rem;
+    }
+
+    .qualities-header h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .qualities-header p {
+      max-width: 22rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .qualities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(196,149,106,0.2);
+    }
+
+    .quality-card {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(196,149,106,0.2);
+      transition: background 0.4s;
+    }
+
+    .quality-card:last-child { border-right: none; }
+    .quality-card:hover { background: rgba(196,149,106,0.05); }
+
+    .quality-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0.6;
+    }
+
+    .quality-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+
+    .quality-desc {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 8rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .contact-left h2 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-left h2 em {
+      font-style: italic;
+      color: var(--warm-brown);
+    }
+
+    .contact-left p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--warm-brown);
+    }
+
+    .contact-info-item span {
+      color: var(--deep);
+      font-weight: 400;
+    }
+
+    form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input, textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(139,111,71,0.3);
+      padding: 0.75rem 0;
+      font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--deep);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-bottom-color: var(--warm-brown);
+    }
+
+    textarea { resize: none; height: 6rem; }
+
+    .btn-submit {
+      background: var(--warm-brown);
+      color: var(--cream);
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      font-family: 'DM Sans', sans-serif;
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background: var(--deep);
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--deep);
+      padding: 3rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      font-weight: 300;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes expandLine {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 7rem 1.5rem 4rem; }
+      .hero-right { height: 50vh; }
+      .hero-scroll-line { left: 1.5rem; }
+      .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .qualities { padding: 4rem 1.5rem; }
+      .qualities-header { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+      .qualities-grid { grid-template-columns: 1fr; }
+      .quality-card { border-right: none; border-bottom: 1px solid rgba(196,149,106,0.2); }
+      .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">W. Martha Afuma</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#qualities">Values</a></li>
+      <li><a href="#contact">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Welcome</p>
+      <h1 class="hero-name">
+        Waindim<br/>
+        <em>Martha</em><br/>
+        Afuma
+      </h1>
+      <p class="hero-tagline">
+        A woman of purpose, passion, and quiet strength — rooted in Cameroon, reaching toward something greater.
+      </p>
+      <div class="hero-cta">
+        <a href="#about" class="btn-primary">Learn More</a>
+        <a href="#contact" class="btn-secondary">Get in Touch →</a>
+      </div>
+      <div class="hero-scroll-line">
+        <div class="scroll-line"></div>
+        Scroll
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-image-wrap">
+        <div class="hero-image-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span style="font-size:0.75rem; letter-spacing:0.15em;">Martha Afuma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="reveal">
+      <p class="section-label">About Her</p>
+    </div>
+    <div class="about-content reveal">
+      <h2>A life built on <em>grace</em> and determination</h2>
+      <p>
+        Waindim Martha Afuma is a remarkable individual from Bamenda, Cameroon — a place that has shaped her resilience, warmth, and deep sense of community. Her journey is one of dedication, heart, and an unwavering belief in growth.
+      </p>
+      <p>
+        Whether in her personal endeavors or in how she shows up for those around her, Martha brings a rare combination of thoughtfulness and drive. She is the kind of person who lifts others while quietly climbing herself.
+      </p>
+      <p>
+        Her story is still being written — and every chapter reflects the depth of character that defines who she is.
+      </p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-number">BDA</div>
+          <div class="stat-label">Bamenda, Cameroon</div>
+        </div>
+        <div>
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Ambition & Drive</div>
+        </div>
+        <div>
+          <div class="stat-number">1</div>
+          <div class="stat-label">Of a Kind</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALITIES -->
+  <section class="qualities" id="qualities">
+    <div class="qualities-header reveal">
+      <h2>What makes her <em>unforgettable</em></h2>
+      <p>The qualities that define Martha go beyond words — but here is an attempt to capture what makes her truly special.</p>
+    </div>
+    <div class="qualities-grid">
+      <div class="quality-card reveal">
+        <div class="quality-number">01</div>
+        <div class="quality-title">Resilience</div>
+        <p class="quality-desc">She has faced challenges with grace and emerged stronger every time. Her ability to endure and grow is something few possess.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-number">02</div>
+        <div class="quality-title">Warmth</div>
+        <p class="quality-desc">Martha has a natural gift for making people feel seen and valued. Her presence is a comfort to everyone around her.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-number">03</div>
+        <div class="quality-title">Ambition</div>
+        <p class="quality-desc">She is never content to stand still. Martha pursues her goals with quiet intensity and a clarity of vision that is rare and inspiring.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-left reveal">
+      <p class="section-label" style="margin-bottom:1.5rem;">Get In Touch</p>
+      <h2>Let's <em>connect</em></h2>
+      <p>Whether you'd like to reach out personally or professionally, Martha is always open to meaningful conversations.</p>
+      <div class="contact-info-item">
+        <span>📍</span> Bamenda, Cameroon
+      </div>
+      <div class="contact-info-item">
+        <span>✉️</span> martha@waindim.com
+      </div>
+    </div>
+    <form class="reveal" action="contact.php" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required placeholder="John Doe" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="john@example.com" />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required placeholder="What would you like to say?"></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Waindim Martha Afuma</div>
+    <div>© 2025 · Bamenda, Cameroon</div>
+    <div>Made with ♥ by her brother</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
